@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title id="Barra_principal"> </title>
+    <meta charset="unicode">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/1243/1243251.png"> -->
+    <link rel="icon" type="image/png" href="../css/1243251.png">
+
+    <link href="../js/boostrap/bootstrap.min.css" rel="stylesheet">
+    <link href="../js/boostrap/docs.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="../js/boostrap/bootstrap-icons.min.css">  -->
+    
+    <script src="../js/boostrap/bootstrap.bundle.min.js"></script>
+
+    <script src="../js/chart.js"></script>
+    <script src="../js/LOGOS.JS"></script>
+
+
+    <script src="../js/topdf/pdfmake.min.js"></script>
+    <script src="../js/topdf/vfs_fonts.js"></script>
+    <script>
+        localStorage.setItem('graficaAbierta', 'true');
+      
+    </script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="../css/fonts/remixicon.css" rel="stylesheet">
+
+
+
+
+</head>
+
+<body>
+
+    <div class="fixed-buttons">
+        <div class="text-center mt-5">
+            <button class="btn btn-info btn-sm" onclick="togglePanel()"><span class="ri-settings-line"></span></button>            
+          </div>
+    </div>
+    <div class="container">
+       
+        <div id="myDropdownPanel" class="dropdown-panel">
+          <div class="d-flex flex-column">
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-secondary  btn-sm mx-1" onclick="Ampliar()"><span class="ri-zoom-in-line"></span></button>
+                <button class="btn btn-secondary  btn-sm" onclick="Encoger()"><span class="ri-zoom-out-line"></span></button>
+            </div>
+            <div class="d-flex justify-content-between mt-2">
+                <button class="btn btn-secondary  btn-sm mx-1" onclick="subirAncho()"><span class="ri-expand-width-line"></span></button>
+                <button class="btn btn-info  btn-sm" onclick="togglePanel()"><span class="ri-close-line"></span></button>
+            </div>
+            <div class="d-flex justify-content-between mt-2">
+                <button class="btn btn-secondary  btn-sm mx-1" onclick="Escalar()"><span class="ri-expand-diagonal-line"></span></button>
+                <button class="btn btn-secondary  btn-sm" onclick="NoEscalar()"><span class="ri-collapse-diagonal-line"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+      function togglePanel() {
+        const panel = document.getElementById('myDropdownPanel');
+        if (panel.style.right === '-250px') {
+          panel.style.right = '0';
+        } else {
+          panel.style.right = '-250px';
+        }
+      }
+      </script>
+  
+
+
+
+    <div class="container encabezado py-4 verbor">
+        <div class="row ">
+            <div class="col-2 verbor">
+                <picture>
+                    <img id="imagenLogo" src="" class="img-fluid py-3" alt="image desc" />
+                </picture>
+                <script>
+                    var sp_logo = localStorage.getItem('sp_logo');                
+                    document.getElementById("imagenLogo").src = sp_logo;
+                </script>
+
+            </div>
+            <div class="col-9 py-4 verbor">
+                <div class=" titulos py-4 verbor">
+                    <h3 id="titulo1"></h3>
+                    <h6 id="titulo2"></h6>
+                    <h6 id="titulo3"></h6>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-12 text-center verbor">
+        <h4 id="tituloGrfico"></h4>
+    </div>
+
+    <script src="../js/data.js"></script>
+
+
+
+
+
+
+
+    <div id="contenedor_delChart" style="max-width: 95%; width: 95%; height: 80vh; max-height: 300vh;"
+        class="verbor chart-container pb-4 d-flex justify-content-center">
+        <canvas id="myChart"></canvas>
+
+
+    </div>
+
+
+    <div class="footer">
+        <div class="row py-2">
+            <div class="col-auto">
+                <button class="btn btn-outline-secondary" id="btnGenerarPDF">Generar PDF  <span class="ri-bar-chart-fill"></span> </button>
+            </div>
+            <div class="col-3">
+                <select id="tipoGrafico" class="form-select btn-outline-secondary" aria-label="Default select example">
+                    <option value="bar"> <span class="iconSelect">&#xEA99;</span> Seleccione un Tipo</option>
+                    <option value="bar"><span class="iconSelect">&#xEA99;</span> Graf. Barras</option>
+                    <option value="pie"><span class="iconSelect">&#xEFF9;</span> Graf. Pastel </option>
+                    <option value="line"><span class="iconSelect">&#xEEAA;</span> Graf. Lineas</option>
+                    <option value="doughnut"><span class="iconSelect">&#xEC41;</span> Graf. Dona</option>
+                    <option value="radar"><span class="iconSelect">&#xF3D4;</span> Graf. Radar</option>
+                    <option value="polarArea"> <span class="iconSelect">&#xEFF7;</span> Graf. Polar</option>
+                    <!-- <option value="bubble">Graf. Burbuja</option>
+                    <option value="derivedBubble">Burbujas a la deriva</option> -->
+
+                </select>
+
+            </div>
+
+
+            <div class="col-3">
+                <div id="Seleccion_DeDatas" class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="ri-bar-chart-fill"></span>Selec. Grupo de Datos
+                    </button>
+                    <ul class="dropdown-menu" title='Ocultar' aria-labelledby="dropdownMenuButton" id="dropdownMenu">
+
+                    </ul>
+                </div>
+            </div>
+            <div class="col-3">
+                <select class="form-select" id="selec_distribucion" aria-label="Default select example">
+                    <option selected>Seleccione una Distribución</option>                
+                  </select>               
+                <!-- <div id="Seleccion_Distribucion" class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="BdropDistribucion"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Seleccionar Distribución
+                    </button>
+                    <ul class="dropdown-menu" title='Ocultar' aria-labelledby="dropdownMenuButton" id="dropDistribucion">
+
+                    </ul>
+                </div> -->
+            </div>
+
+
+        </div>
+        <div class="table-responsive">
+            <table id="mi_tabla" class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Filtro</th>
+                    </tr>
+                </thead>
+                <tbody id="body_tabla">
+                    <tr id="td_id" class="">
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+
+
+
+    </div>
+
+
+    <script src="../js/config.js"></script>
+
+
+    <div class="footer">
+
+    </div>
+
+
+    <script src="../js/topdf/conversores.js"></script>
+    <script src="../js/topdf/PDF.js"></script>
+    <script>
+
+    </script>
+    <script>
+        document.getElementById('btnGenerarPDF').addEventListener('click', function () {
+            var with_image;
+
+            if (List_ocultaSelectSets.includes(document.getElementById('tipoGrafico').value)) {
+                with_image = 500;
+            } else {
+                with_image = 300;
+            }
+
+            
+            var elemento = document.getElementById('myChart');
+            var imagenlog = document.getElementById('imagenLogo');
+            const logotipo = elementoADataURL(imagenlog);
+            const datachart = elementoADataURL(elemento);
+            IMPRIME_PDF(datachart, with_image);
+        });
+
+        window.addEventListener('beforeunload', function () {
+            // Eliminar el valor de localStorage
+            localStorage.removeItem('graficaAbierta');
+        });
+    </script>
+
+
+</body>
+
+</html>

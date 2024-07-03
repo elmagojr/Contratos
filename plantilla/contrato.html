@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  
+    <link href="../js/boostrap/bootstrap.min.css" rel="stylesheet">
+    <link href="../js/boostrap/docs.css" rel="stylesheet">
+    <script src="../js/topdf/pdf_contrato.js"></script>
+    
+    <script src="../js/topdf/pdfmake.min.js"></script>
+    <script src="../js/topdf/vfs_fonts.js"></script>
+    <script src="../js/topdf/vfs_fonts.js"></script>
+</head>
+
+<body>
+    <button type="button" onclick="imprime_pdf()" class="btn btn-primary">
+        PDF
+    </button>
+    <H1 id="tutu">
+
+    </H1>
+    <section id="pruebas">
+
+    </section>
+    <script src="../js/topdf/tools.js"></script>
+    <script src="../js/data.js"></script>
+    <script>
+        document.getElementById("pruebas").innerHTML  = cuerpo
+        document.getElementById("tutu").textContent = encabezado[0].Tiutlo
+    </script>
+</body>
+
+</html>
