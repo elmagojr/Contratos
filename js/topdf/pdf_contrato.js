@@ -1,6 +1,6 @@
 function imprime_pdf() {
     var dd = {
-        pageSize: 'LETTER',
+        pageSize: 'FOLIO',
         pageOrientation: 'Portrait',
         // pageMargins: [0, 0, 0, 0],
         //footer: function(currentPage, pageCount) { return currentPage.toString() + ' de ' + pageCount; },
